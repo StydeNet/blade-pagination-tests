@@ -45,6 +45,6 @@ class PaginationTest extends TestCase
 
     protected function removeWhitespaces($string)
     {
-        return preg_replace('/\s+/', '', $string);
+        return preg_replace('/\s+/', ' ', $string);
     }
 }
