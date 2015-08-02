@@ -17,16 +17,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Supported themes
-Route::pattern('theme', 'bootstrap|foundation|materialize');
+// Out of the box supported themes
+Route::pattern('theme', implode('|', Themes::getSupported()));
 
-Route::get('users/{theme?}', function ($theme = 'bootstrap') {
+Route::get('users/{theme?}/{per_page?}', function ($theme = 'bootstrap', $perPage = 10) {
     // Change pagination theme
     Config::set('blade-pagination.theme', $theme);
     // Get CSS framework CDN
-    $cdn = get_cdn($theme);
+    $cdn = Themes::getCdn($theme);
     // Paginate users and render the view
-    $users = App\User::paginate(10);
+    $users = App\User::paginate($perPage);
     // Render the view
     return view('users', compact('users', 'theme', 'cdn'));
 });
